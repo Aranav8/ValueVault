@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:ridobike/Screens/dashboard.dart';
-import 'package:ridobike/Screens/home_screen.dart';
 import 'package:ridobike/Screens/new_home_screen.dart';
 import 'package:ridobike/Utils/colors.dart';
 
@@ -61,18 +59,18 @@ class _SplashScreenState extends State<SplashScreen> {
                           width: 300,
                           height: 300,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 36,
                         ),
                         const Text(
-                          "Let's start using this car price evaluation for better experience",
+                          "Let's start using used vehicle price evaluation for better experience",
                           style: TextStyle(
                               fontSize: 24,
                               fontFamily: "MontserratBold",
                               color: colorBlack),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 36,
                         ),
                         const Text(
@@ -83,26 +81,26 @@ class _SplashScreenState extends State<SplashScreen> {
                               color: Colors.black26),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 42,
                         ),
-                        Container(
-                          height: 52,
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          decoration: BoxDecoration(
-                              color: colorPrimary,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Center(
-                            child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: "MontserratBold",
-                                  color: colorWhite),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
+                        // Container(
+                        //   height: 52,
+                        //   width: MediaQuery.of(context).size.width * 0.85,
+                        //   decoration: BoxDecoration(
+                        //       color: colorPrimary,
+                        //       borderRadius: BorderRadius.circular(8)),
+                        //   child: Center(
+                        //     child: Text(
+                        //       "Get Started",
+                        //       style: TextStyle(
+                        //           fontSize: 14,
+                        //           fontFamily: "MontserratBold",
+                        //           color: colorWhite),
+                        //       textAlign: TextAlign.center,
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

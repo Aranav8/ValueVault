@@ -1,4 +1,4 @@
-package com.example.ridobike
+package com.ridobiko.android.valuevault
 
 import io.flutter.embedding.android.FlutterActivity
 

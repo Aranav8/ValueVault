@@ -41,8 +41,12 @@ class _ContainerSelectionState extends State<ContainerSelection> {
 
     // Extract numeric part using split
     // Parse price values as double
-    double goodMinPriceValue = double.tryParse(goodMinPrice.split('Rs. ').last.replaceAll(',', '').trim()) ?? 0;
-    double goodMaxPriceValue = double.tryParse(goodMaxPrice.split('Rs. ').last.replaceAll(',', '').trim()) ?? 0;
+    double goodMinPriceValue = double.tryParse(
+            goodMinPrice.split('Rs. ').last.replaceAll(',', '').trim()) ??
+        0;
+    double goodMaxPriceValue = double.tryParse(
+            goodMaxPrice.split('Rs. ').last.replaceAll(',', '').trim()) ??
+        0;
     print(goodMaxPriceValue);
     print(goodMinPriceValue);
 
@@ -74,25 +78,29 @@ class _ContainerSelectionState extends State<ContainerSelection> {
     String priceRange;
     switch (selectedContainerIndex) {
       case 0:
-        priceRange = "Rs. ${formatter.format(badMinPrice)} - Rs. ${formatter.format(badMaxPrice)}";
+        priceRange =
+            "Rs. ${formatter.format(badMinPrice)} - Rs. ${formatter.format(badMaxPrice)}";
         break;
       case 1:
-        priceRange = "Rs. ${formatter.format(fairMinPrice)} - Rs. ${formatter.format(fairMaxPrice)}";
+        priceRange =
+            "Rs. ${formatter.format(fairMinPrice)} - Rs. ${formatter.format(fairMaxPrice)}";
         break;
       case 2:
         priceRange = "${goodMinPrice} - ${goodMinPrice}";
         break;
       case 3:
-        priceRange = "Rs. ${formatter.format(veryGoodMinPrice)} - Rs. ${formatter.format(veryGoodMaxPrice)}";
+        priceRange =
+            "Rs. ${formatter.format(veryGoodMinPrice)} - Rs. ${formatter.format(veryGoodMaxPrice)}";
         break;
       case 4:
-        priceRange = "Rs. ${formatter.format(excellentMinPrice)} - Rs. ${formatter.format(excellentMaxPrice)}";
+        priceRange =
+            "Rs. ${formatter.format(excellentMinPrice)} - Rs. ${formatter.format(excellentMaxPrice)}";
         break;
       default:
-        priceRange = "Rs. ${formatter.format(goodMinPrice)} - Rs. ${formatter.format(goodMaxPrice)}";
+        priceRange =
+            "Rs. ${formatter.format(goodMinPrice)} - Rs. ${formatter.format(goodMaxPrice)}";
         break;
     }
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -100,22 +108,35 @@ class _ContainerSelectionState extends State<ContainerSelection> {
       children: [
         Text(
           "$priceRange",
-          textAlign: TextAlign.center,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(5, (index) {
-              return ContainerOption(
+        // Display the first row with 3 items
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(3, (index) {
+            return Expanded(
+              child: ContainerOption(
                 index: index,
                 isSelected: selectedContainerIndex == index,
                 onSelect: selectContainer,
-              );
-            }),
-          ),
+              ),
+            );
+          }),
+        ),
+        SizedBox(height: 8),
+        // Display the second row with 2 items
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(2, (index) {
+            return Expanded(
+              child: ContainerOption(
+                index: index + 3, // Offsetting the index for the next row
+                isSelected: selectedContainerIndex == index + 3,
+                onSelect: selectContainer,
+              ),
+            );
+          }),
         ),
       ],
     );
@@ -138,22 +159,19 @@ class ContainerOption extends StatelessWidget {
     final labels = ["Bad", "Fair", "Good", "Very Good", "Excellent"];
     return GestureDetector(
       onTap: () => onSelect(index),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Container(
-          height: 32,
-          width: MediaQuery.of(context).size.width * 0.3 - 24,
-          decoration: BoxDecoration(
-            color: isSelected ? colorPrimary : Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Center(
-            child: Text(
-              labels[index],
-              style: TextStyle(
-                color: isSelected ? Colors.white : Colors.black,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              ),
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 4.0), // Margin for spacing
+        height: 32,
+        decoration: BoxDecoration(
+          color: isSelected ? colorPrimary : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: Text(
+            labels[index],
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ),

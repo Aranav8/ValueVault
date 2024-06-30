@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import 'package:ridobike/Screens/formScreen/form_four.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:ridobike/Utils/colors.dart';
 
 import '../../Controller/databaseController.dart';
 import '../../Controller/global_controller.dart';
 
 import '../../Utils/utils.dart';
-import 'formOne.dart';
+import 'form_one.dart';
 import 'form_two.dart';
 
 class FormThree extends StatefulWidget {
@@ -22,19 +21,47 @@ class FormThree extends StatefulWidget {
   @override
   State<FormThree> createState() => _FormThreeState();
 }
+
 TextEditingController _searchKeyController = TextEditingController();
 GlobalController controller = Get.find();
 DataBaseController databaseController = Get.find();
+
 class _FormThreeState extends State<FormThree> {
   Future<void> fetchYears(String brand, String model) async {
     try {
       // Get all distinct makes
-      await databaseController.fetchYears("cars_table", brand, model);
-
+      await databaseController.fetchYears(widget.tableName, brand, model);
     } catch (error) {
-      print('Error fetching brands: $error');
+      if (kDebugMode) {
+        print('Error fetching brands: $error');
+      }
       throw Exception('Error fetching brands $error');
     }
+  }
+
+  Widget _buildContainer(String text) {
+    return Container(
+      constraints: BoxConstraints(minHeight: 26, minWidth: 60),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey.shade100,
+        border: Border.all(color: Colors.grey.shade100, width: 0.6),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "MontserratSemiBold",
+              fontSize: 12,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -56,7 +83,7 @@ class _FormThreeState extends State<FormThree> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Obx(() {
@@ -66,178 +93,19 @@ class _FormThreeState extends State<FormThree> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (_) =>
-                                      FormOne(tableName: widget.tableName),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              constraints: BoxConstraints(
-                                minHeight: 26,
-                                minWidth: 60,
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.grey.shade100,
-                                  border: Border.all(
-                                      color: Colors.grey.shade100, width: 0.6)),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Text(
-                                    controller.brand.value,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: "MontserratSemiBold",
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (_) =>
-                                      FormTwo(tableName: widget.tableName),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              constraints: BoxConstraints(
-                                minHeight: 26,
-                                minWidth: 60,
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.grey.shade100,
-                                  border: Border.all(
-                                      color: Colors.grey.shade100, width: 0.6)),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Text(
-                                    controller.model.value,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: "MontserratSemiBold",
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // Navigator.pop(context);
-                              // Navigator.push(
-                              //   context,
-                              //   CupertinoPageRoute(
-                              //     fullscreenDialog: true,
-                              //     builder: (_) =>
-                              //         FormThree(tableName: widget.tableName),
-                              //   ),
-                              // );
-                            },
-                            child: Container(
-                              constraints: BoxConstraints(
-                                minHeight: 26,
-                                minWidth: 60,
-                              ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                      color: Colors.grey.shade100, width: 0.6)),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Text(
-                                    controller.year.value.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: "MontserratSemiBold",
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (_) =>
-                                      FormFour(tableName: widget.tableName),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              constraints: BoxConstraints(
-                                minHeight: 26,
-                                minWidth: 60,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                      color: Colors.grey.shade100, width: 0.6)),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Text(
-                                    controller.variant.value,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: "MontserratSemiBold",
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
+                          _buildContainer(controller.brand.value),
+                          SizedBox(width: 16),
+                          _buildContainer(controller.model.value),
+                          SizedBox(width: 16),
+                          _buildContainer(controller.year.value.toString()),
+                          SizedBox(width: 16),
+                          _buildContainer(controller.variant.value),
+                          SizedBox(width: 16),
                         ],
                       ),
                     );
                   }),
-                  SizedBox(
+                  const SizedBox(
                     height: 26,
                   ),
                   const Text(
@@ -299,11 +167,13 @@ class _FormThreeState extends State<FormThree> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
-                        print(snapshot.error); // Log the error to the console
+                        if (kDebugMode) {
+                          print(snapshot.error);
+                        } // Log the error to the console
                         return const Text("Error fetching brands");
                       } else {
-                        final years = databaseController.allYears ?? [];
-                        final searchBrands = databaseController.searchYears ?? [];
+                        final years = databaseController.allYears;
+                        final searchBrands = databaseController.searchYears;
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 8),
@@ -419,10 +289,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
     super.initState();
     // Initialize the appropriate database helper based on the vehicle type
     if (widget.tableName == 'Car') {
-      
-    } else if (widget.tableName == 'Motorcycle') {
-     
-    }
+    } else if (widget.tableName == 'Motorcycle') {}
   }
 
   Future<List<int>> fetchYears(String brand, String model) async {
@@ -432,7 +299,9 @@ class _ArteonScreenState extends State<ArteonScreen> {
           await dbHelper.searchYearsByMakeAndModel(brand, model);
       return allYears;
     } catch (error) {
-      print('Error fetching models: $error');
+      if (kDebugMode) {
+        print('Error fetching models: $error');
+      }
       throw Exception('Error fetching models: $error');
     }
   }
@@ -546,12 +415,14 @@ class _ArteonScreenState extends State<ArteonScreen> {
                                   ConnectionState.waiting) {
                                 return const CircularProgressIndicator();
                               } else if (snapshot.hasError) {
-                                print(snapshot
-                                    .error); // Log the error to the console
+                                if (kDebugMode) {
+                                  print(snapshot.error);
+                                } // Log the error to the console
                                 return const Text("Error fetching brands");
                               } else {
                                 final years = snapshot.data ?? [];
-                                final searchBrands = databaseController.searchYears ?? [];
+                                final searchBrands =
+                                    databaseController.searchYears;
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16.0, vertical: 8),
@@ -572,16 +443,19 @@ class _ArteonScreenState extends State<ArteonScreen> {
                                       mainAxisSpacing:
                                           16, // Vertical spacing between grid items
                                     ),
-                                    itemCount: _searchKeyController.text.isNotEmpty
-                                        ? searchBrands.length
-                                        : years.length,
+                                    itemCount:
+                                        _searchKeyController.text.isNotEmpty
+                                            ? searchBrands.length
+                                            : years.length,
                                     itemBuilder: (context, index) {
-                                      final year = _searchKeyController.text.isNotEmpty
-                                          ? searchBrands[index]
-                                          : years[index];
+                                      final year =
+                                          _searchKeyController.text.isNotEmpty
+                                              ? searchBrands[index]
+                                              : years[index];
                                       return GestureDetector(
                                         onTap: () {
-                                          controller.year.value = year.toString();
+                                          controller.year.value =
+                                              year.toString();
                                           // controller.trim.value = '';
                                           Navigator.pop(context);
                                         },
@@ -662,7 +536,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.75,
                 height: MediaQuery.of(context).size.height * 0.5,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.black54,
                     borderRadius:
                         BorderRadius.only(bottomRight: Radius.circular(40))),
@@ -670,15 +544,15 @@ class _ArteonScreenState extends State<ArteonScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 36,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16.0),
                       child: Icon(Icons.arrow_back_ios_new_outlined,
                           color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 36,
                     ),
                     Padding(
@@ -694,7 +568,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Container(
@@ -718,8 +592,8 @@ class _ArteonScreenState extends State<ArteonScreen> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
                         'Arteon 2019',
                         style: TextStyle(
@@ -729,7 +603,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Image.asset(
                       'assets/images/yellowCar.png',
                       // Replace with your image asset
@@ -737,7 +611,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
                       width: 400,
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48.0),
                       child: Row(
@@ -747,34 +621,34 @@ class _ArteonScreenState extends State<ArteonScreen> {
                           Container(
                             height: 4,
                             width: 4,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: colorWhite, shape: BoxShape.circle),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Container(
                             height: 4,
                             width: 4,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white54, shape: BoxShape.circle),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Container(
                             height: 4,
                             width: 4,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white54, shape: BoxShape.circle),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Container(
                             height: 4,
                             width: 4,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white54, shape: BoxShape.circle),
                           )
                         ],
@@ -784,30 +658,30 @@ class _ArteonScreenState extends State<ArteonScreen> {
                 ),
               ),
               Container(
-                color: Color(0xff1e1e1f),
+                color: const Color(0xff1e1e1f),
                 width: MediaQuery.of(context).size.width * 0.25,
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 48,
                     ),
-                    Icon(Icons.crop_free, color: Colors.white),
-                    SizedBox(
+                    const Icon(Icons.crop_free, color: Colors.white),
+                    const SizedBox(
                       height: 38,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: tabItem("Technology", false),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 48,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 36.0),
                       child: tabItem("Specification", false),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 48,
                     ),
                     tabItem("Overview", true),
@@ -816,9 +690,9 @@ class _ArteonScreenState extends State<ArteonScreen> {
               ),
             ],
           ),
-          SizedBox(height: 36),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36.0),
+          const SizedBox(height: 36),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36.0),
             child: Text(
               'The All-New Arteon.\nDesigned to Steal\nAttention.',
               style: TextStyle(
@@ -827,9 +701,9 @@ class _ArteonScreenState extends State<ArteonScreen> {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36.0),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36.0),
             child: Text(
               'An evolution of the classic\nfastback design and interior\ncomfort.',
               style: TextStyle(
@@ -838,7 +712,7 @@ class _ArteonScreenState extends State<ArteonScreen> {
               ),
             ),
           ),
-          SizedBox(height: 36),
+          const SizedBox(height: 36),
           Obx(() {
             return GestureDetector(
               onTap: () {
@@ -918,12 +792,12 @@ Widget tabItem(String title, bool isSelected) {
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         if (isSelected)
           Container(
             height: 4,
             width: 4,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.yellow,
               shape: BoxShape.circle,
             ),

@@ -11,7 +11,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?table=$tableName&make=$make&model=$model&year=$year&trim=$trim'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?table=$tableName&make=$make&model=$model&year=$year&trim=$trim'),
       );
 
       if (response.statusCode == 200) {
@@ -33,7 +33,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?action=getMakes&table=$tableName'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?action=getMakes&table=$tableName'),
       );
 
       if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?table=$tableName&make=$brand'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?table=$tableName&make=$brand'),
       );
 
       if (response.statusCode == 200) {
@@ -71,7 +71,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?table=$tableName&make=$brand&model=$model'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?table=$tableName&make=$brand&model=$model'),
       );
 
       if (response.statusCode == 200) {
@@ -90,7 +90,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?make=$brand&model=$model&table=$tableName&year=$year'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?make=$brand&model=$model&table=$tableName&year=$year'),
       );
 
       if (response.statusCode == 200) {
@@ -108,7 +108,7 @@ class DatabaseRepository extends GetxController {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.31.83/api/index.php?table=newcars_table&carName=$carName'),
+            'https://twowheelerrental.in/used_vehicle_valuation_api/index.php?table=newcars_table&carName=$carName'),
       );
 
       if (response.statusCode == 200) {
